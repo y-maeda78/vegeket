@@ -42,5 +42,6 @@ class Item(models.Model):   # Modelは、jangoのクラスで継承している
                                  null=True, blank=True) # ForeignKeyとon_delete=はセット
     tags = models.ManyToManyField(Tag)   #複数設定することを前提にtagsとしManyToManyFieldで定義
 
+    # インスタンスの生成（returnでnameを返すことで、一覧画面で名前が表示される）
     def __str__(self):
         return self.name
