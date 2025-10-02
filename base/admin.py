@@ -5,7 +5,6 @@ from django.contrib.auth.models import Group
 class TagInline(admin.TabularInline):
     model = Item.tags.through
 
-
 class ItemAdmin(admin.ModelAdmin):
     inlines = [TagInline]
     exclude = ['tags']
