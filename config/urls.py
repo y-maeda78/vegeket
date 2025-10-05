@@ -19,5 +19,14 @@ from base import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.IndexListViews.as_view()),   # トップページ
+    path('', views.IndexListViews.as_view()),       # トップページ
+
+    # Items
+    path('items/<str:pk>/', views.ItemDetailView.as_view()),    # 商品詳細ページ
+
+    # Cart
+    path('cart/', views.CartListView.as_view()),    # カートページ
+    path('cart/add/', views.AddCartView.as_view()), # カートに追加する
+    path('cart/update/', views.UpdateCartView.as_view()), # カートを更新する
+    path('cart/remove/<str:pk>/', views.remove_from_cart), # カート内の商品削除 (関数ビューなので.as_view()不要)
 ]
