@@ -26,8 +26,9 @@ class Tag(models.Model):
 
 # Itemで呼び出せるように定義
 class Item(models.Model):   # Modelは、jangoのクラスで継承している
-    id = models.CharField(default=create_id, primary_key=True,
-                          max_length=22, editable=False)
+    # id = models.CharField(default=create_id, primary_key=True,
+    #                       max_length=22, editable=False)
+    id = models.AutoField(primary_key=True) 
     name = models.CharField(default='', max_length=50)
     price = models.PositiveIntegerField(default=0)
     stock = models.PositiveIntegerField(default=0)
