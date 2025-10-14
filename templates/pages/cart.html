@@ -50,7 +50,7 @@
       <!-- Checkoutボタン -->
       <form action="/pay/checkout/" method="POST" class="text-right">
         {% csrf_token %}
-        <button type="submit" class="btn btn-info">Checkout</button>
+        <button type="submit" class="btn btn-info rounded-pill py-2 px-3">ご購入手続きへ進む</button>
       </form>
  
       {% else %}
