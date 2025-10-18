@@ -4,11 +4,12 @@ from django.conf import settings
 # from stripe.api_resources import tax_rate
 from base.models import Item
 import stripe
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 stripe.api_key = settings.STRIPE_API_SECRET_KEY
 
 # 決済完了の場合の処理
-class PaySuccessView(TemplateView):
+class PaySuccessView(LoginRequiredMixin, TemplateView):
   template_name = 'pages/success.html'
 
   # 最新のOrderオブジェクトを取得し、注文確定に変更
@@ -19,7 +20,7 @@ class PaySuccessView(TemplateView):
 
 
 # 処理がうまくいかなかった場合の処理
-class PayCancelView(TemplateView):
+class PayCancelView(LoginRequiredMixin, TemplateView):
   template_name = 'pages/cancel.html'
   # 最新のOrderオブジェクトを取得
   def get(self, request, *args, **kwargs):
@@ -50,14 +51,34 @@ def create_line_item(unit_amount, name, quantity):
     'quantity': quantity,
     'tax_rates': [tax_rate.id]
   }
- 
- 
+
+
+# プロフィールが登録されているかどうかを判定する（発送に必要な項目が埋まっているか）
+def check_profile_filled(profile):
+    if profile.name is None or profile.name == '':
+      return False
+    elif profile.zipcode is None or profile.zipcode == '':
+      return False
+    elif profile.prefecture is None or profile.prefecture == '':
+      return False
+    elif profile.city is None or profile.city == '':
+      return False
+    elif profile.address1 is None or profile.address1 == '':
+      return False
+    elif profile.tel is None or profile.tel == '':
+      return False
+    return True
+
 
 # カートに入れた商品の代金を支払う処理
 # Stripeの用意した安全な支払い画面へユーザーを自動的に移動（リダイレクト）させる
-class PayWithStripe(View):
+class PayWithStripe(LoginRequiredMixin, View):
 
   def post(self, request, *args, **kwargs):
+    # プロフィールが埋まっているかどうか確認
+    if not check_profile_filled(request.user.profile):
+      return redirect('/profile/')
+        
     cart = request.session.get('cart', None)
     if cart is None or len(cart) == 0:
       return redirect('/')
@@ -78,3 +99,5 @@ class PayWithStripe(View):
       cancel_url=f'{settings.MY_URL}/pay/cancel/',      # 決済に失敗したときに戻すurl
     )
     return redirect(checkout_session.url)               # Stripeが作った決済セッションのページへのURL
+
+
