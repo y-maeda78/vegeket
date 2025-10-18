@@ -31,7 +31,7 @@ urlpatterns = [
     path('cart/remove/<str:pk>/', views.remove_from_cart), # カート内の商品削除 (関数ビューなので.as_view()不要)
 
     # Pay
-    path('pay/checkout/', views.PayWithStripe.as_view()),
-    path('pay/success/', views.PaySuccessView.as_view()),
-    path('pay/cancel/', views.PayCancelView.as_view()),
+    path('pay/checkout/', views.PayWithStripe.as_view()),   # 決済ページへリダイレクトする
+    path('pay/success/', views.PaySuccessView.as_view()),   # 決済成功ページへ移動する
+    path('pay/cancel/', views.PayCancelView.as_view()),     # 決済失敗ページへ移動する
 ]
