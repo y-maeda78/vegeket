@@ -19,8 +19,10 @@ from base import views
 from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
     path('', views.IndexListViews.as_view()),       # トップページ
+
+    # admin
+    path('admin/', admin.site.urls),  
 
     # Account
     path('login/', views.Login.as_view()),
@@ -42,4 +44,8 @@ urlpatterns = [
     path('pay/checkout/', views.PayWithStripe.as_view()),   # 決済ページへリダイレクトする
     path('pay/success/', views.PaySuccessView.as_view()),   # 決済成功ページへ移動する
     path('pay/cancel/', views.PayCancelView.as_view()),     # 決済失敗ページへ移動する
+
+    # Order
+    path('orders/<str:pk>/', views.OrderDetailView.as_view()),
+    path('orders/', views.OrderIndexView.as_view()),
 ]

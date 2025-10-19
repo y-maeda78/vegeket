@@ -92,7 +92,7 @@ class Profile(models.Model):
 
 # OneToOneField を同時に作成　ユーザーモデルが作成されたらプロフィールが作成される仕様
 # @：デコレーター　関数が実行される前に ＠～ の処理を実行する
-@receiver(post_save, sender=User)         # ユーザーモデルが作成された時点で
+@receiver(post_save, sender=User)         # ユーザーモデルが作成されたタイミングで
 def create_onetoone(sender, **kwargs):    # プロフィールを作成する
-    if kwargs['created']:
-        Profile.objects.create(user=kwargs['instance'])
+    if kwargs['created']:                 # createdというパラメータが出来たら
+        Profile.objects.create(user=kwargs['instance'])     # プロフィールのオブジェクトを作る　instanceは、キーと値が「instance：user」
