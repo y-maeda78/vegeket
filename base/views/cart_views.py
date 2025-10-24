@@ -5,6 +5,7 @@ from base.models import Item
 from collections import OrderedDict
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
  
 class CartListView(LoginRequiredMixin, ListView):
   model = Item
@@ -53,8 +54,10 @@ class AddCartView(LoginRequiredMixin, View):
       cart = {'items': items}
     if item_pk in cart['items']:
       cart['items'][item_pk] += quantity
+      messages.success(self.request, 'カートに追加されました。')
     else:
       cart['items'][item_pk] = quantity
+      messages.success(self.request, 'カートに追加されました。')
     request.session['cart'] = cart
     return redirect('/cart/')
   

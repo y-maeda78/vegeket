@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import environ  #追記
+from django.contrib import messages
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -76,6 +77,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                'config.custom_context_processors.base',  # 追記
             ],
         },
     },
@@ -171,3 +174,16 @@ LOGOUT_URL = '/logout/'
 
 # ログアウトした後のリダイレクトページ
 LOGOUT_REDIRECT_URL = '/login/'
+
+# massages
+MESSAGE_TAGS = { # 指定したtagによってクラスを追加して装飾を分ける
+    messages.ERROR: 'rounded-0 alert alert-danger',
+    messages.WARNING: 'rounded-0 alert alert-warning',
+    messages.SUCCESS: 'rounded-0 alert alert-success',
+    messages.INFO: 'rounded-0 alert alert-info',
+    messages.DEBUG: 'rounded-0 alert alert-secondary',
+}
+
+
+# custom_context カスタムコンテキスト
+TITLE = 'VegeKet'

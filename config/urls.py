@@ -33,6 +33,8 @@ urlpatterns = [
 
     # Items
     path('items/<str:pk>/', views.ItemDetailView.as_view()),    # 商品詳細ページ
+    path('categories/<str:pk>/', views.CategoryListView.as_view()), # カテゴリーフィルター
+    path('tags/<str:pk>/', views.TagListView.as_view()),            # タグフィルター
 
     # Cart
     path('cart/', views.CartListView.as_view()),    # カートページ

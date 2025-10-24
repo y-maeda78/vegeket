@@ -58,6 +58,30 @@
       {% endif %}
     </div>
   </div>
+
+  <h2>おすすめ商品</h2>
+  <div class="row mb-5">
+    {% for object in ADDTIONAL_ITEMS %}
+    {% if forloop.counter < 9 %}
+    <div class="col-12 col-lg-3 my-3">
+      {% include 'snippets/item_add_box.html' %}
+    </div>
+    {% endif %}
+    {% endfor %}
+  </div>
+
 </div>
- 
+
+<!-- ブラウザバックへの対応 -->
+<script>
+  document.addEventListener("visibilitychange", () => {
+      // visibilityState：違うページへ行って戻ってきた場合
+      if (document.visibilityState === "visible") {
+        window.location = "/pay/cancel/";
+      }
+    },
+    false
+  );
+</script>
+
 {% endblock %}
