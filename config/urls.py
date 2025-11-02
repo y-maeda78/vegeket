@@ -17,12 +17,15 @@ from django.contrib import admin
 from django.urls import path
 from base import views
 from django.contrib.auth.views import LogoutView
+from django.views.generic import TemplateView
 
 urlpatterns = [
     path('', views.IndexListViews.as_view()),       # トップページ
 
     # admin
     path('admin/', admin.site.urls),  
+    path('terms/', TemplateView.as_view(template_name='pages/terms.html'), name='terms'),
+    path('privacy/', TemplateView.as_view(template_name='pages/privacy.html'), name='privacy'),
 
     # Account
     path('login/', views.Login.as_view()),

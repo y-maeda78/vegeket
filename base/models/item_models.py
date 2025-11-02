@@ -7,7 +7,7 @@ def create_id():
 
 def upload_image_to(instance, filename):
     item_id = instance.id
-    return os.path.join('static', 'items', item_id, filename)
+    return os.path.join('static', 'items', str(item_id), filename)
 
 # カテゴリーの作成
 class Category(models.Model):
@@ -32,9 +32,9 @@ class Item(models.Model):   # Modelは、jangoのクラスで継承している
     name = models.CharField(default='', max_length=50)
     price = models.PositiveIntegerField(default=0)
     stock = models.PositiveIntegerField(default=0)
-    description = models.TextField(default='', blank=True)
+    description = models.TextField(default='', blank=True, verbose_name='説明')
     sold_count = models.PositiveIntegerField(default=0)
-    is_published = models.BooleanField(default=False)
+    is_published = models.BooleanField(default=False, verbose_name='公開')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     image = models.ImageField(default="", blank=True,
