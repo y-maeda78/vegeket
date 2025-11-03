@@ -7,7 +7,7 @@ def create_id():
 
 def upload_image_to(instance, filename):
     item_id = instance.id
-    return os.path.join('static', 'items', str(item_id), filename)
+    return os.path.join('static', 'items', item_id, filename)
 
 # カテゴリーの作成
 class Category(models.Model):
