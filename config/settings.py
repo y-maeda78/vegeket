@@ -147,7 +147,7 @@ STATIC_URL = '/static/'
 # staticは静的ファイルを管理するフォルダ
 STATICFILES_DIRS = [BASE_DIR / 'static']    # 追記
 
-STATIC_ROOT = BASE_DIR / 'static'   # HEROKUデプロイのため追記
+STATIC_ROOT = BASE_DIR / 'staticfiles'   # HEROKUデプロイのため追記
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
