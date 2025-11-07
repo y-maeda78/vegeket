@@ -9,10 +9,11 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-import os
-from dotenv import load_dotenv
+
 from pathlib import Path
 import environ  #追記
+import os
+from dotenv import load_dotenv
 from django.contrib import messages
 
 load_dotenv()
@@ -27,25 +28,24 @@ root = environ.Path(BASE_DIR / 'secrets')
 # 追記 開発環境 ----
 env.read_env(root('.env.dev'))
 
-
 # 追記 本番環境 ----
-# env.read_env(root('.env.prod'))
-
+#env.read_env(root('.env.prod'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env.str('SECRET_KEY')
+#SECRET_KEY = env.str('SECRET_KEY')
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env.bool('DEBUG')
+#DEBUG = env.bool('DEBUG')
+DEBUG =  os.environ.get('DEBUG_MODE', 'False')
 
-ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
-
+#ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.herokuapp.com']
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -89,22 +89,18 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',   # mySQLに設定
-        'NAME': env.str('DB_DATABASE'),
-        'USER': env.str('DB_USERNAME'),
-        'PASSWORD': env.str('DB_PASSWORD'),
-        'HOST': env.str('DB_HOST'),
-        'PORT': env.str('DB_PORT', '3306'),
-        'OPTIONS': {
-           'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-        },
-    }
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': os.environ.get('DB_DATABASE'),
+        'USER': os.environ.get('DB_USERNAME'),
+        'PASSWORD': os.environ.get('DB_PASSWORD'),
+        'HOST': os.environ.get('DB_HOST'),
+        'PORT': os.environ.get('DB_PORT', '3306'),
+    },
 }
 
 #SECRET_KEY = env.str('SECRET_KEY')
@@ -160,10 +156,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 TAX_RATE = 0.1
 
 # 追加 Stripe API Key
-STRIPE_API_SECRET_KEY = env.str('STRIPE_API_SECRET_KEY')
+#STRIPE_API_SECRET_KEY = env.str('STRIPE_API_SECRET_KEY')
+STRIPE_API_SECRET_KEY = os.environ.get('STRIPE_API_SECRET_KEY')
+
  
 # 追加 スキーマ＆ドメイン
-MY_URL = env.str('MY_URL')
+#MY_URL = env.str('MY_URL')
+MY_URL = os.environ.get('MY_URL')
 
 # カスタムユーザーモデル
 AUTH_USER_MODEL = 'base.User'
