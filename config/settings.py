@@ -54,6 +54,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize', # 追記
+    'cloudinary_storage', # 追記
+    'cloudinary', # 追記
     'base', #作成したアプリケーションを追加
 ]
 
@@ -142,11 +145,35 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-
 # staticは静的ファイルを管理するフォルダ
 STATICFILES_DIRS = [BASE_DIR / 'static']    # 追記
-
 STATIC_ROOT = BASE_DIR / 'staticfiles'   # HEROKUデプロイのため追記
+
+MEDIA_URL = '/media/' # 追記
+MEDIA_ROOT = BASE_DIR / 'media_local' # 追記
+
+# 画像の設定 #.envへ移動する
+CLOUDINARY_STORAGE  = {
+    'CLOUD_NAME':'hemwtd6fe',
+    'API_KEY':'414247835524267',
+    'API_SECRET':'FdQFGbDNOJWedTzzCgCj9YC_GaI'
+}
+
+
+# DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField' # HEROKUデプロイ時のみ追加
+# DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage' # HEROKUデプロイ時のみ追加
+# DEFAULT_AUTO_FIELD = env.str('DEFAULT_AUTO_FIELD', default=None)
+# DEFAULT_FILE_STORAGE = env.str('DEFAULT_FILE_STORAGE', default=None)
+
+if DEBUG:
+    # ローカル開発用
+    DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+    DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
+else:
+    # Heroku本番用
+    DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -192,3 +219,4 @@ MESSAGE_TAGS = { # 指定したtagによってクラスを追加して装飾を�
 
 # custom_context カスタムコンテキスト
 TITLE = 'VegeKet'
+

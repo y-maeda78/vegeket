@@ -18,6 +18,8 @@ from django.urls import path
 from base import views
 from django.contrib.auth.views import LogoutView
 from django.views.generic import TemplateView
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('', views.IndexListViews.as_view()),       # トップページ
@@ -54,3 +56,7 @@ urlpatterns = [
     path('orders/<str:pk>/', views.OrderDetailView.as_view()),
     path('orders/', views.OrderIndexView.as_view()),
 ]
+
+# 画像の設定
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

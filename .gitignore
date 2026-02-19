@@ -2,3 +2,5 @@ __pycache__/
 db.sqlite3
 secrets/.env.dev
 secrets/.env.prod
+.env
+venv/
