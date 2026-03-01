@@ -160,19 +160,19 @@ CLOUDINARY_STORAGE  = {
 }
 
 
-# DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField' # HEROKUデプロイ時のみ追加
-# DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage' # HEROKUデプロイ時のみ追加
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField' # HEROKUデプロイ時のみ追加
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage' # HEROKUデプロイ時のみ追加
 # DEFAULT_AUTO_FIELD = env.str('DEFAULT_AUTO_FIELD', default=None)
 # DEFAULT_FILE_STORAGE = env.str('DEFAULT_FILE_STORAGE', default=None)
 
-if DEBUG:
-    # ローカル開発用
-    DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-    DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
-else:
-    # Heroku本番用
-    DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+# if DEBUG:
+#     # ローカル開発用
+#     DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+#     DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
+# else:
+#     # Heroku本番用
+#     DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+#     DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 
 # Default primary key field type
