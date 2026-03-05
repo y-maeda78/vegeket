@@ -28,6 +28,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),  
     path('terms/', TemplateView.as_view(template_name='pages/terms.html'), name='terms'),
     path('privacy/', TemplateView.as_view(template_name='pages/privacy.html'), name='privacy'),
+    path('company/', TemplateView.as_view(template_name='pages/company.html'), name='company'),
 
     # Account
     path('login/', views.Login.as_view()),
