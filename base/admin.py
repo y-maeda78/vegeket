@@ -37,11 +37,27 @@ class CustomUserAdmin(UserAdmin):
     add_form = UserCreationForm
     inlines = (ProfileInline,)
 
-class CustomJsonField(forms.JSONField):  # 追記
-    def prepare_value(self, value):  # 追記
-        loaded = json.loads(value)  # 追記
-        return json.dumps(loaded, indent=2, ensure_ascii=False)  # 追記
- 
+# class CustomJsonField(forms.JSONField):  # 追記
+#     def prepare_value(self, value):  # 追記
+#         loaded = json.loads(value)  # 追記
+#         return json.dumps(loaded, indent=2, ensure_ascii=False)  # 追記
+
+class CustomJsonField(forms.JSONField):
+    def prepare_value(self, value):
+        if value is None:
+            return value
+            
+        if not isinstance(value, str):
+            return json.dumps(value, indent=2, ensure_ascii=False)
+            
+        # 値が文字列の場合（DBから読み込んだ直後など）
+        try:
+            # JSON文字列をオブジェクトに変換
+            loaded = json.loads(value)
+            return json.dumps(loaded, indent=2, ensure_ascii=False)
+        except (json.JSONDecodeError, TypeError):
+            # JSONとして解析できない文字列なら、そのまま返す
+            return value
  
 class OrderAdminForm(forms.ModelForm):  # 追記
     items = CustomJsonField()  # 追記

@@ -24,7 +24,16 @@ class OrderDetailView(LoginRequiredMixin, DetailView):
   def get_context_data(self, **kwargs):
     context = super().get_context_data(**kwargs)
     obj = self.get_object()
-    # json to dict
-    context["items"] = json.loads(obj.items)
-    context["shipping"] = json.loads(obj.shipping)
+
+    if isinstance(obj.items, str):
+      context["items"] = json.loads(obj.items)
+    else:
+      context["items"] = obj.items
+          
+    # shippingの処理
+    if isinstance(obj.shipping, str):
+      context["shipping"] = json.loads(obj.shipping)
+    else:
+      context["shipping"] = obj.shipping
+
     return context

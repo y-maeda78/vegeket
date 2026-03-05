@@ -189,7 +189,7 @@ STRIPE_API_SECRET_KEY = os.environ.get('STRIPE_API_SECRET_KEY')
 
  
 # 追加 スキーマ＆ドメイン
-#MY_URL = env.str('MY_URL')
+# MY_URL = 'http://127.0.0.1:8000/'
 MY_URL = os.environ.get('MY_URL')
 
 # カスタムユーザーモデル
